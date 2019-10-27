@@ -4,22 +4,23 @@
 #include <iostream>
 #include <fstream>
 
-class InputBuffer
+class OutputBuffer
 {
 	Controller* controller;
 	Paralelogram* buffer;	//tab of records
 	int bufferSize;			//size of records' tab
 	int lastRecord;			//index of last record in buffer
 	int actualRecord;		//index of next record to read
+	bool logs;				//display logs
 
 	int bookmark;			//index of previously read record (from file)
 	bool eof;
 	std::string file;		//name of file
 
 public:
-	InputBuffer(Controller *c, std::string filename, int bufferSize_);
-	Paralelogram* getRecord();
-	void printBuffer(); 
-	void loadBuffer();
+	OutputBuffer(Controller* c, std::string filename, int bufferSize_, bool logs_ = true);
+	~OutputBuffer();
+	bool putRecord(Paralelogram* record);
+	void saveRest();
 };
 

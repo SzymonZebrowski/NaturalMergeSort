@@ -19,6 +19,12 @@ std::string Paralelogram::to_string() const {
 	return ss.str();
 }
 
+std::string Paralelogram::to_raw_data() {
+	std::stringstream ss;
+	ss << a << " " << b << " " << angle;
+	return ss.str();
+}
+
 std::ostream& operator<< (std::ostream& o, const Paralelogram& obj) {
 	return o << obj.to_string();
 }

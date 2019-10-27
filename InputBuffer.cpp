@@ -1,14 +1,14 @@
 #include "InputBuffer.h"
 
-InputBuffer::InputBuffer(std::string filename, int bufferSize_) {
-	file = "../../" + filename;
+InputBuffer::InputBuffer(Controller *c, std::string filename, int bufferSize_) {
+	file = filename;
 	bufferSize = bufferSize_;
 	buffer = new Paralelogram[bufferSize];
 	actualRecord = bufferSize;
 	lastRecord = 0;
 	eof = false;
 	bookmark = 0;
-	controller = new Controller();
+	controller = c;
 }
 
 Paralelogram* InputBuffer::getRecord() {
