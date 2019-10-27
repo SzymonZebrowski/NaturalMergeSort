@@ -3,9 +3,8 @@
 #include "OutputBuffer.h"
 #include "Controller.h"
 
-int bufferSize = 256;
-
 void distribution(Controller* controller) {
+	controller->increaseNumberOfDistributionPhases();
 	std::string input = "c.txt";
 	std::string output1 = "a.txt";
 	std::string output2 = "b.txt";
@@ -35,6 +34,7 @@ void distribution(Controller* controller) {
 }
 
 bool merging(Controller* controller) {
+	controller->increaseNumberOfMergingPhases();
 	std::string input1 = "a.txt";
 	std::string input2 = "b.txt";
 	std::string output = "c.txt";
@@ -43,44 +43,33 @@ bool merging(Controller* controller) {
 	InputBuffer* tapeI2 = new InputBuffer(controller, input2, controller->getBufferSize());
 	OutputBuffer* tapeO = new OutputBuffer(controller, output, controller->getBufferSize());
 
+	
+
 	Paralelogram *recordI1 = tapeI1->getRecord(), *recordI2 = tapeI2->getRecord();
 	float prevValueI1 = 0, prevValueI2 = 0;
 
 	if (recordI2 == nullptr) return false;
 	while (1) {
 		if (recordI1 != nullptr && recordI2 != nullptr) {
-			if (recordI1->get_field() < prevValueI1) {
-				while (recordI2 != nullptr && recordI2->get_field() > prevValueI2) {
-					tapeO->putRecord(recordI2);
-					prevValueI2 = recordI2->get_field();
-					recordI2 = tapeI2->getRecord();
-				}
-				prevValueI1 = prevValueI2 = 0;
-			}
-			else if (recordI2->get_field() < prevValueI2) {
-				while (recordI1 != nullptr && recordI1->get_field() > prevValueI1) {
+			
+				if (recordI1->get_field() <= recordI2->get_field()) {
 					tapeO->putRecord(recordI1);
-					prevValueI1 = recordI1->get_field();
-					recordI1 = tapeI1->getRecord();
-				}
-				prevValueI1 = prevValueI2 = 0;
-			}
-			else {
-				if (recordI1->get_field() < recordI2->get_field()) {
-					tapeO->putRecord(recordI1);
+					//std::cout << "Zapisano: " << recordI1 << std::endl;
 					prevValueI1 = recordI1->get_field();
 					recordI1 = tapeI1->getRecord();
 				}
 				else if (recordI2->get_field() < recordI1->get_field()) {
 					tapeO->putRecord(recordI2);
+					//std::cout << "Zapisano: " << recordI2 << std::endl;
 					prevValueI2 = recordI2->get_field();
 					recordI2 = tapeI2->getRecord();
 				}
-			}
+			
 		}
 		else if (recordI1 == nullptr) {
 			while (recordI2 != nullptr) {
 				tapeO->putRecord(recordI2);
+				//std::cout << "Zapisano: " << recordI2 << std::endl;
 				recordI2 = tapeI2->getRecord();
 			}
 			break;
@@ -88,6 +77,7 @@ bool merging(Controller* controller) {
 		else if (recordI2 == nullptr) {
 			while (recordI1 != nullptr) {
 				tapeO->putRecord(recordI1);
+				//std::cout << "Zapisano: " << recordI1 << std::endl;
 				recordI1 = tapeI1->getRecord();
 			}
 			break;
@@ -116,16 +106,16 @@ void rewriteSorted(Controller* controller) {
 }
 
 int main() {
-	Controller* controller = new Controller(256);
+	Controller* controller = new Controller(1200);
 	
 	while (true) {
 		distribution(controller);
-		if(merging(controller)) break;
+		if(!merging(controller)) break;
 	}
 
 	rewriteSorted(controller);
 
-	std::ifstream file("c.txt");
+	std::ifstream file("sorted.txt");
 	float a, b, c;
 	int i = 0;
 	while (file >> a >> b >> c) {

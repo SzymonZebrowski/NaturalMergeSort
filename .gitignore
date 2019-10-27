@@ -332,3 +332,6 @@ ASALocalRun/
 *.sln
 *.vcxproj
 *.vcxproj.filters
+/10.txt
+/100.txt
+/sorted.txt

@@ -14,7 +14,7 @@ InputBuffer::InputBuffer(Controller *c, std::string filename, int bufferSize_) {
 Paralelogram* InputBuffer::getRecord() {
 
 	if (actualRecord == bufferSize) {	//buffer is empty, we need to read data from file
-		std::cout << "Buffer empty, loading data from tape." << std::endl;
+		//std::cout << "Buffer empty, loading data from tape." << std::endl;
 		loadBuffer();		
 	}
 

@@ -7,6 +7,7 @@ OutputBuffer::OutputBuffer(Controller* c, std::string filename, int bufferSize_,
 	logs = logs_;
 	controller = c;
 	file = filename;
+	remove(file.c_str());
 }
 
 OutputBuffer::~OutputBuffer() {
@@ -44,11 +45,17 @@ bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
 void OutputBuffer::saveRest() {
 	controller->increaseNumberOfSaves();
 
-	std::ofstream output(file, std::ios::out | std::ios::app);
+	std::ofstream output(file, std::ios::out);
 	for (int i = 0; i < actualRecord; i++) {
 		output << buffer[i].to_raw_data() << std::endl;
 	}
 	output.close();
 	actualRecord = 0;
+}
+
+void OutputBuffer::printBuffer() {
+	for (int i = actualRecord - 1; i < lastRecord; i++) {
+		std::cout << i << ". " << buffer[i] << std::endl;
+	}
 }
 
