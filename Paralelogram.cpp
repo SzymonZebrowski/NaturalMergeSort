@@ -1,5 +1,7 @@
 #include "Paralelogram.h"
 
+Paralelogram::Paralelogram() {
+}
 
 Paralelogram::Paralelogram(float a_, float b_, float angle_) {
 	a = a_;

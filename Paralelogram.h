@@ -10,6 +10,7 @@ class Paralelogram
 	float angle;
 
 public:
+	Paralelogram();
 	Paralelogram(float a_, float b_, float angle_);
 
 	float get_field() const;

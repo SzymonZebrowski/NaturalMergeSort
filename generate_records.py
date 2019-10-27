@@ -14,4 +14,4 @@ with open(args.f, 'w') as f:
         a = float(random.uniform(0,100))
         b = float(random.uniform(0,100))
         c = float(random.uniform(0, math.pi))
-        f.write(f"{a};{b};{c}\n")
+        f.write(f"{a} {b} {c}\n")
