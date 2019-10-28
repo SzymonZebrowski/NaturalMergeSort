@@ -45,7 +45,7 @@ bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
 void OutputBuffer::saveRest() {
 	controller->increaseNumberOfSaves();
 
-	std::ofstream output(file, std::ios::out);
+	std::ofstream output(file, std::ios::out | std::ios::app);
 	for (int i = 0; i < actualRecord; i++) {
 		output << buffer[i].to_raw_data() << std::endl;
 	}
