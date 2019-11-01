@@ -9,6 +9,11 @@ InputBuffer::InputBuffer(Controller *c, std::string filename, int bufferSize_) {
 	eof = false;
 	bookmark = 0;
 	controller = c;
+	input = std::fstream(file);
+}
+
+InputBuffer::~InputBuffer() {
+	input.close();
 }
 
 Paralelogram* InputBuffer::getRecord() {
@@ -34,9 +39,8 @@ void InputBuffer::loadBuffer() {
 	Paralelogram* new_paralelogram;
 	float a, b, c;
 
-	std::ifstream input(file);
 	
-	input.seekg(bookmark, input.beg);
+	//input.seekg(bookmark, input.beg);
 
 	lastRecord = 0;
 
@@ -51,7 +55,7 @@ void InputBuffer::loadBuffer() {
 		}
 	}
 
-	bookmark = input.tellg();
-	input.close();
+	//bookmark = input.tellg();
+	//input.close();
 	actualRecord = 0;
 }

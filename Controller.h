@@ -12,6 +12,10 @@ public:
 	void increaseNumberOfPhases();
 	void log();
 
+	void distribution();
+	bool merging();
+	void rewriteSorted();
+
 	int getBufferSize();
 
 };

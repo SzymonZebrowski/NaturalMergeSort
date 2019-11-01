@@ -15,9 +15,11 @@ class InputBuffer
 	int bookmark;			//index of previously read record (from file)
 	bool eof;
 	std::string file;		//name of file
+	std::fstream input;
 
 public:
 	InputBuffer(Controller *c, std::string filename, int bufferSize_);
+	~InputBuffer();
 	Paralelogram* getRecord();
 	void printBuffer(); 
 	void loadBuffer();

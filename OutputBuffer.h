@@ -16,6 +16,7 @@ class OutputBuffer
 	int bookmark;			//index of previously read record (from file)
 	bool eof;
 	std::string file;		//name of file
+	std::fstream output;
 
 public:
 	OutputBuffer(Controller* c, std::string filename, int bufferSize_, bool logs_ = false);

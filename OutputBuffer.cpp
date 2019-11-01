@@ -8,12 +8,13 @@ OutputBuffer::OutputBuffer(Controller* c, std::string filename, int bufferSize_,
 	controller = c;
 	file = filename;
 	remove(file.c_str());
+	output = std::fstream(file, std::ios::out | std::ios::app);
 }
 
 OutputBuffer::~OutputBuffer() {
 	controller->increaseNumberOfSaves();
 
-	std::ofstream output(file, std::ios::out | std::ios::app);
+	//std::ofstream output(file, std::ios::out | std::ios::app);
 	for (int i = 0; i < actualRecord; i++) {
 		output << buffer[i].to_raw_data() << std::endl;
 	}
@@ -24,7 +25,7 @@ bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
 	if (actualRecord == bufferSize) { //buffer if full, we need to save to file
 		controller->increaseNumberOfSaves();
 
-		std::ofstream output(file, std::ios::out | std::ios::app);
+		//std::ofstream output(file, std::ios::out | std::ios::app);
 
 		actualRecord = 0;
 
@@ -33,7 +34,7 @@ bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
 			output << buffer[i].to_raw_data() << std::endl;
 			if (logs) std::cout << buffer[i].to_string() << std::endl;
 		}
-		output.close();
+		//output.close();
 	}
 
 	if (record == nullptr) return false;
@@ -45,11 +46,11 @@ bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
 void OutputBuffer::saveRest() {
 	controller->increaseNumberOfSaves();
 
-	std::ofstream output(file, std::ios::out | std::ios::app);
+	//std::ofstream output(file, std::ios::out | std::ios::app);
 	for (int i = 0; i < actualRecord; i++) {
 		output << buffer[i].to_raw_data() << std::endl;
 	}
-	output.close();
+	//output.close();
 	actualRecord = 0;
 }
 
