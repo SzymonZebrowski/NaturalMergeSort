@@ -12,29 +12,16 @@ int main(int argc, char* argv[]) {
 	4. show after each phase -> --vp
 	*/
 
-	InputController(argc, argv);
+	InputController inputController(argc, argv);
 
-	return 0;
-	Controller* controller = new Controller(100);
+	Controller* controller = new Controller(inputController.getBufferSize(),
+											inputController.getInputMethod(),
+											inputController.getShowAfterEachPhase(),
+											inputController.getShowAfterSorting());
 	
-	while (true) {
-		controller->distribution();
-		if(!controller->merging()) break;
-	}
-
+	
+	controller->sort();
 	controller->rewriteSorted();
 
-	/*
-	std::ifstream file("sorted.txt");
-	float a, b, c;
-	int i = 0;
-	
-	while (file >> a >> b >> c) {
-		std::cout << Paralelogram(a, b, c) << std::endl;
-	}
-	
-	file.close();
-	controller->log();
-	*/
 	return 0;
 }

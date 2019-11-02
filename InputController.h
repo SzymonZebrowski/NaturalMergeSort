@@ -24,5 +24,10 @@ public:
 	InputController(int, char**);
 	void parseInput();
 	void usage();
+
+	bool getShowAfterEachPhase();
+	bool getShowAfterSorting();
+	std::string getInputMethod();
+	int getBufferSize();
 };
 
