@@ -88,6 +88,7 @@ bool Controller::merging() {
 
 	if (recordI2 == nullptr) { //tape "b" is empty - all records are on "a" tape (sorted)
 		delete tapeO;
+		tapeI1->clearBuffer();
 		delete tapeI1;
 		delete tapeI2;
 		return false;

@@ -17,6 +17,13 @@ InputBuffer::~InputBuffer() {
 	delete[] buffer;
 }
 
+void InputBuffer::clearBuffer() {
+	for (int i = 0; i < lastRecord; i++) {
+		delete buffer[i];
+		std::cout << "dealocated no. " << ++controller->deallocatedRecords << std::endl;
+	}
+}
+
 Paralelogram* InputBuffer::getRecord() {
 
 	if (actualRecord == bufferSize) {	//buffer is empty, we need to read data from file
