@@ -24,6 +24,5 @@ public:
 	Paralelogram* getRecord();
 	void printBuffer(); 
 	void loadBuffer();
-	void clearBuffer();
 };
 #endif

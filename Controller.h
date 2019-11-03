@@ -31,10 +31,5 @@ public:
 
 	int getBufferSize();
 
-	int allocatedRecords;
-	int deallocatedRecords;
-
-
-
 };
 #endif

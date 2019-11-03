@@ -13,8 +13,6 @@ Controller::Controller(int bufferSize_, std::string input, bool saep, bool sas) 
 	bufferSize = bufferSize_;
 	showAfterEachPhase = saep;
 	showAfterSorting = sas;
-	allocatedRecords = 0;
-	deallocatedRecords = 0;
 
 	if (input.length() > 4 && input.substr(input.length() - 4, input.length() - 1) == ".txt") fileInput(input);
 	else if (input.substr(0, 1) == "k") userInput(atoi(input.substr(1).c_str()));
@@ -33,9 +31,6 @@ void Controller::increaseNumberOfPhases() {
 void Controller::log() {
 	std::cout << "Number of saves: " << numberOfSaves << ", number of reads: " << numberOfSaves << std::endl;
 	std::cout << "Number of phases: " << numberOfPhases << std::endl;
-	std::cout << "Number of allcoated records: " << allocatedRecords <<std::endl;
-	std::cout << "Number of deallcoated records: " << deallocatedRecords <<std::endl;
-
 }
 
 int Controller::getBufferSize() {
@@ -83,16 +78,17 @@ bool Controller::merging() {
 
 
 
-	Paralelogram* recordI1 = tapeI1->getRecord(), * recordI2 = tapeI2->getRecord();
+	Paralelogram* recordI1, * recordI2 = tapeI2->getRecord();
 	float prevValueI1 = 0, prevValueI2 = 0;
 
 	if (recordI2 == nullptr) { //tape "b" is empty - all records are on "a" tape (sorted)
 		delete tapeO;
-		tapeI1->clearBuffer();
+		//tapeI1->clearBuffer();
 		delete tapeI1;
 		delete tapeI2;
 		return false;
 	}
+	recordI1 = tapeI1->getRecord();
 	while (true) {
 		if (recordI1 != nullptr && recordI2 != nullptr) {
 			if (recordI1->get_field() < prevValueI1) {

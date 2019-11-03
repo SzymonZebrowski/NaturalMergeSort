@@ -17,13 +17,6 @@ InputBuffer::~InputBuffer() {
 	delete[] buffer;
 }
 
-void InputBuffer::clearBuffer() {
-	for (int i = 0; i < lastRecord; i++) {
-		delete buffer[i];
-		std::cout << "dealocated no. " << ++controller->deallocatedRecords << std::endl;
-	}
-}
-
 Paralelogram* InputBuffer::getRecord() {
 
 	if (actualRecord == bufferSize) {	//buffer is empty, we need to read data from file
@@ -53,9 +46,7 @@ void InputBuffer::loadBuffer() {
 	while ((lastRecord < bufferSize) && !eof) {
 		if (input >> a >> b >> c) {
 			new_paralelogram = new Paralelogram(a, b, c);
-			controller->allocatedRecords++;
 			buffer[lastRecord++] = new_paralelogram;
-			std::cout<<"allocated no. "<<controller->allocatedRecords<<std::endl;
 		}
 		else {
 			eof = true;

@@ -18,7 +18,6 @@ OutputBuffer::~OutputBuffer() {
 	for (int i = 0; i < actualRecord; i++) {
 		output << buffer[i]->to_raw_data() << std::endl;
 		delete buffer[i];
-		std::cout<<"deallocated no. "<<++controller->deallocatedRecords<<std::endl;
 	}
 	output.close();
 	delete [] buffer;
@@ -37,7 +36,6 @@ bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
 			output << buffer[i]->to_raw_data() << std::endl;
 			if (logs) std::cout << buffer[i] << std::endl;
 			delete buffer[i];
-			std::cout<<"deallocated no. "<<++controller->deallocatedRecords<<std::endl;
 		}
 		//output.close();
 	}
