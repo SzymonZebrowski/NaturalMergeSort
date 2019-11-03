@@ -16,7 +16,6 @@ InputBuffer::~InputBuffer() {
 	input.close();
 	if (bookmark > 0) {
 		for (int i = 0; i < actualRecord; i++) {
-			std::cout << (buffer[i] == nullptr) << std::endl;
 			delete buffer[i];
 
 		}
@@ -49,7 +48,6 @@ void InputBuffer::loadBuffer() {
 
 	if(bookmark>0) {
 		for (int i = 0; i < actualRecord; i++) {
-			std::cout << (buffer[i] == nullptr) << std::endl;
 			delete buffer[i];
 
 		}

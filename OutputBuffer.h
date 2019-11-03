@@ -8,7 +8,7 @@
 class OutputBuffer
 {
 	Controller* controller;
-	Paralelogram* buffer;	//tab of records
+	Paralelogram** buffer;	//tab of records
 	int bufferSize;			//size of records' tab
 	int lastRecord;			//index of last record in buffer
 	int actualRecord;		//index of next record to read

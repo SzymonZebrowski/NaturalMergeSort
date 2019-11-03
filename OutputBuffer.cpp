@@ -2,7 +2,7 @@
 
 OutputBuffer::OutputBuffer(Controller* c, std::string filename, int bufferSize_, bool logs_) {
 	bufferSize = bufferSize_;
-	buffer = new Paralelogram[bufferSize];
+	buffer = new Paralelogram*[bufferSize];
 	actualRecord = 0;
 	logs = logs_;
 	controller = c;
@@ -16,9 +16,11 @@ OutputBuffer::~OutputBuffer() {
 
 	//std::ofstream output(file, std::ios::out | std::ios::app);
 	for (int i = 0; i < actualRecord; i++) {
-		output << buffer[i].to_raw_data() << std::endl;
+		output << buffer[i]->to_raw_data() << std::endl;
+		//delete buffer[i];
 	}
 	output.close();
+	//delete buffer;
 }
 
 bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
@@ -31,15 +33,16 @@ bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
 
 		if (logs) std::cout << "File after next phase: " << std::endl;
 		for (int i = 0; i < bufferSize; i++) {
-			output << buffer[i].to_raw_data() << std::endl;
-			if (logs) std::cout << buffer[i].to_string() << std::endl;
+			output << buffer[i]->to_raw_data() << std::endl;
+			if (logs) std::cout << buffer[i] << std::endl;
+			//delete buffer[i];
 		}
 		//output.close();
 	}
 
 	if (record == nullptr) return false;
 	//save record to buffer
-	buffer[actualRecord++] = *record;
+	buffer[actualRecord++] = record;
 	return true;
 }
 
@@ -48,7 +51,7 @@ void OutputBuffer::saveRest() {
 
 	//std::ofstream output(file, std::ios::out | std::ios::app);
 	for (int i = 0; i < actualRecord; i++) {
-		output << buffer[i].to_raw_data() << std::endl;
+		output << buffer[i]->to_raw_data() << std::endl;
 	}
 	//output.close();
 	actualRecord = 0;
