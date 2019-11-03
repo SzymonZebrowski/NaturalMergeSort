@@ -23,7 +23,6 @@ public:
 	OutputBuffer(Controller* c, std::string filename, int bufferSize_, bool logs_ = false);
 	~OutputBuffer();
 	bool putRecord(Paralelogram* record);
-	void saveRest();
 	void printBuffer();
 };
 #endif

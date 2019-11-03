@@ -13,6 +13,8 @@ Controller::Controller(int bufferSize_, std::string input, bool saep, bool sas) 
 	bufferSize = bufferSize_;
 	showAfterEachPhase = saep;
 	showAfterSorting = sas;
+	allocatedRecords = 0;
+	deallocatedRecords = 0;
 
 	if (input.length() > 4 && input.substr(input.length() - 4, input.length() - 1) == ".txt") fileInput(input);
 	else if (input.substr(0, 1) == "k") userInput(atoi(input.substr(1).c_str()));
@@ -31,6 +33,9 @@ void Controller::increaseNumberOfPhases() {
 void Controller::log() {
 	std::cout << "Number of saves: " << numberOfSaves << ", number of reads: " << numberOfSaves << std::endl;
 	std::cout << "Number of phases: " << numberOfPhases << std::endl;
+	std::cout << "Number of allcoated records: " << allocatedRecords <<std::endl;
+	std::cout << "Number of deallcoated records: " << deallocatedRecords <<std::endl;
+
 }
 
 int Controller::getBufferSize() {
@@ -62,8 +67,6 @@ void Controller::distribution() {
 		tape->putRecord(record);
 		prevValue = record->get_field();
 	}
-	tapeO1->printBuffer();
-	tapeO2->printBuffer();
 	delete tapeO1;
 	delete tapeO2;
 	delete tapeI;
@@ -135,9 +138,9 @@ bool Controller::merging() {
 			break;
 		}
 	}
+	delete tapeO;
 	delete tapeI1;
 	delete tapeI2;
-	delete tapeO;
 	return true;
 }
 void Controller::rewriteSorted() {

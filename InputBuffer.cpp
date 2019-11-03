@@ -46,8 +46,9 @@ void InputBuffer::loadBuffer() {
 	while ((lastRecord < bufferSize) && !eof) {
 		if (input >> a >> b >> c) {
 			new_paralelogram = new Paralelogram(a, b, c);
-			buffer[lastRecord] = new_paralelogram;
-			lastRecord++;
+			controller->allocatedRecords++;
+			buffer[lastRecord++] = new_paralelogram;
+			std::cout<<"allocated no. "<<controller->allocatedRecords<<std::endl;
 		}
 		else {
 			eof = true;
