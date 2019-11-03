@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OUTPUTBUFFER_H
+#define OUTPUTBUFFER_H
 #include "Paralelogram.h"
 #include "Controller.h"
 #include <iostream>
@@ -25,4 +26,4 @@ public:
 	void saveRest();
 	void printBuffer();
 };
-
+#endif

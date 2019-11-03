@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PARALELOGRAM_H
+#define PARALELOGRAM_H
 #include <math.h>
 #include <iostream>
 #include <sstream>
@@ -22,4 +23,4 @@ public:
 
 	friend std::ostream& operator<< (std::ostream& o, const Paralelogram* obj);
 };
-
+#endif

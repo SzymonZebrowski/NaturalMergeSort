@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INPUTBUFFER_H
+#define INPUTBUFFER_H
 #include "Paralelogram.h"
 #include "Controller.h"
 #include <iostream>
@@ -24,4 +25,4 @@ public:
 	void printBuffer(); 
 	void loadBuffer();
 };
-
+#endif

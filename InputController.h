@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INPUTCONTROLLER_H
+#define INPUTCONTROLLER_H
 #include <iostream>
 
 class InputController
@@ -30,4 +31,4 @@ public:
 	std::string getInputMethod();
 	int getBufferSize();
 };
-
+#endif
