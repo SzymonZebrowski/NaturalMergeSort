@@ -3,7 +3,7 @@
 InputBuffer::InputBuffer(Controller *c, std::string filename, int bufferSize_) {
 	file = filename;
 	bufferSize = bufferSize_;
-	buffer = new Paralelogram[bufferSize];
+	buffer = new Paralelogram*[bufferSize];
 	actualRecord = bufferSize;
 	lastRecord = 0;
 	eof = false;
@@ -14,6 +14,14 @@ InputBuffer::InputBuffer(Controller *c, std::string filename, int bufferSize_) {
 
 InputBuffer::~InputBuffer() {
 	input.close();
+	if (bookmark > 0) {
+		for (int i = 0; i < actualRecord; i++) {
+			std::cout << (buffer[i] == nullptr) << std::endl;
+			delete buffer[i];
+
+		}
+	}
+	delete[] buffer;
 }
 
 Paralelogram* InputBuffer::getRecord() {
@@ -25,7 +33,7 @@ Paralelogram* InputBuffer::getRecord() {
 
 	//buffer is full, nothing more to read from file
 	if (actualRecord >= lastRecord && eof)	return nullptr;
-	else return &buffer[actualRecord++];
+	else return buffer[actualRecord++];
 }
 
 void InputBuffer::printBuffer() {
@@ -39,7 +47,13 @@ void InputBuffer::loadBuffer() {
 	Paralelogram* new_paralelogram;
 	float a, b, c;
 
-	
+	if(bookmark>0) {
+		for (int i = 0; i < actualRecord; i++) {
+			std::cout << (buffer[i] == nullptr) << std::endl;
+			delete buffer[i];
+
+		}
+	}
 	//input.seekg(bookmark, input.beg);
 
 	lastRecord = 0;
@@ -47,7 +61,7 @@ void InputBuffer::loadBuffer() {
 	while ((lastRecord < bufferSize) && !eof) {
 		if (input >> a >> b >> c) {
 			new_paralelogram = new Paralelogram(a, b, c);
-			buffer[lastRecord] = *new_paralelogram;
+			buffer[lastRecord] = new_paralelogram;
 			lastRecord++;
 		}
 		else {
@@ -58,4 +72,5 @@ void InputBuffer::loadBuffer() {
 	//bookmark = input.tellg();
 	//input.close();
 	actualRecord = 0;
+	bookmark++;
 }
