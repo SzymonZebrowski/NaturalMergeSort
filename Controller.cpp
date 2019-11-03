@@ -29,7 +29,7 @@ void Controller::increaseNumberOfPhases() {
 }
 
 void Controller::log() {
-	std::cout << "Number of saves: " << numberOfSaves << ", number of reads: " << numberOfSaves << std::endl;
+	std::cout << "Number of saves: " << numberOfSaves << ", number of reads: " << numberOfReads << std::endl;
 	std::cout << "Number of phases: " << numberOfPhases << std::endl;
 }
 
