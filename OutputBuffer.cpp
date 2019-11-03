@@ -17,10 +17,10 @@ OutputBuffer::~OutputBuffer() {
 	//std::ofstream output(file, std::ios::out | std::ios::app);
 	for (int i = 0; i < actualRecord; i++) {
 		output << buffer[i]->to_raw_data() << std::endl;
-		//delete buffer[i];
+		delete buffer[i];
 	}
 	output.close();
-	//delete buffer;
+	delete buffer;
 }
 
 bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
@@ -35,13 +35,14 @@ bool OutputBuffer::putRecord(Paralelogram* record) { //save record to file
 		for (int i = 0; i < bufferSize; i++) {
 			output << buffer[i]->to_raw_data() << std::endl;
 			if (logs) std::cout << buffer[i] << std::endl;
-			//delete buffer[i];
+			delete buffer[i];
 		}
 		//output.close();
 	}
 
 	if (record == nullptr) return false;
 	//save record to buffer
+	std::cout << "Inserting record: " << record->to_raw_data() << std::endl;
 	buffer[actualRecord++] = record;
 	return true;
 }
@@ -58,7 +59,7 @@ void OutputBuffer::saveRest() {
 }
 
 void OutputBuffer::printBuffer() {
-	for (int i = actualRecord - 1; i < lastRecord; i++) {
+	for (int i = 0; i < actualRecord; i++) {
 		std::cout << i << ". " << buffer[i] << std::endl;
 	}
 }

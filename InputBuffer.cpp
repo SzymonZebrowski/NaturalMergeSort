@@ -14,12 +14,6 @@ InputBuffer::InputBuffer(Controller *c, std::string filename, int bufferSize_) {
 
 InputBuffer::~InputBuffer() {
 	input.close();
-	if (bookmark > 0) {
-		for (int i = 0; i < actualRecord; i++) {
-			delete buffer[i];
-
-		}
-	}
 	delete[] buffer;
 }
 
@@ -45,13 +39,6 @@ void InputBuffer::loadBuffer() {
 	controller->increaseNumberOfReads();
 	Paralelogram* new_paralelogram;
 	float a, b, c;
-
-	if(bookmark>0) {
-		for (int i = 0; i < actualRecord; i++) {
-			delete buffer[i];
-
-		}
-	}
 	//input.seekg(bookmark, input.beg);
 
 	lastRecord = 0;

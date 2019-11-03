@@ -62,9 +62,11 @@ void Controller::distribution() {
 		tape->putRecord(record);
 		prevValue = record->get_field();
 	}
-	delete tapeI;
+	tapeO1->printBuffer();
+	tapeO2->printBuffer();
 	delete tapeO1;
 	delete tapeO2;
+	delete tapeI;
 }
 
 bool Controller::merging() {
@@ -82,9 +84,9 @@ bool Controller::merging() {
 	float prevValueI1 = 0, prevValueI2 = 0;
 
 	if (recordI2 == nullptr) { //tape "b" is empty - all records are on "a" tape (sorted)
+		delete tapeO;
 		delete tapeI1;
 		delete tapeI2;
-		delete tapeO;
 		return false;
 	}
 	while (true) {
@@ -139,16 +141,14 @@ bool Controller::merging() {
 	return true;
 }
 void Controller::rewriteSorted() {
-	std::string input = "a.txt";
-	std::string output = "sorted.txt";
-
-	InputBuffer* org = new InputBuffer(this, input, getBufferSize());
-	OutputBuffer* copy = new OutputBuffer(this, output, getBufferSize());
-
-	while (copy->putRecord(org->getRecord()));
-	copy->saveRest();
-	delete copy;
-	delete org;
+	std::fstream input("a.txt");
+	std::fstream output("sorted.txt", std::ios::out | std::ios::app);
+	float a, b, c;
+	while (input >> a >> b >> c) {
+		output << a << " " << b << " " << c << std::endl;
+	}
+	input.close();
+	output.close();
 
 	remove("a.txt");
 	remove("b.txt");
