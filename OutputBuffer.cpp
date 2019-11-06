@@ -12,12 +12,14 @@ OutputBuffer::OutputBuffer(Controller* c, std::string filename, int bufferSize_,
 }
 
 OutputBuffer::~OutputBuffer() {
-	controller->increaseNumberOfSaves();
+	if(actualRecord){
+		controller->increaseNumberOfSaves();
 
 	//std::ofstream output(file, std::ios::out | std::ios::app);
-	for (int i = 0; i < actualRecord; i++) {
-		output << buffer[i]->to_raw_data() << std::endl;
-		delete buffer[i];
+		for (int i = 0; i < actualRecord; i++) {
+			output << buffer[i]->to_raw_data() << std::endl;
+			delete buffer[i];
+		}
 	}
 	output.close();
 	delete [] buffer;
@@ -51,4 +53,5 @@ void OutputBuffer::printBuffer() {
 		std::cout << i << ". " << buffer[i] << std::endl;
 	}
 }
+
 
