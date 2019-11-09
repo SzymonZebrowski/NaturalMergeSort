@@ -19,7 +19,6 @@ int main(int argc, char* argv[]) {
 											inputController.getShowAfterEachPhase(),
 											inputController.getShowAfterSorting());
 	
-	
 	controller->sort();
 	controller->rewriteSorted();
 

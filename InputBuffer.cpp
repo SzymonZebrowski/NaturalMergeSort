@@ -20,7 +20,6 @@ InputBuffer::~InputBuffer() {
 Paralelogram* InputBuffer::getRecord() {
 
 	if (actualRecord == bufferSize) {	//buffer is empty, we need to read data from file
-		//std::cout << "Buffer empty, loading data from tape." << std::endl;
 		loadBuffer();		
 	}
 
@@ -53,8 +52,5 @@ void InputBuffer::loadBuffer() {
 		}
 	}
 
-	//bookmark = input.tellg();
-	//input.close();
 	actualRecord = 0;
-	bookmark++;
 }
